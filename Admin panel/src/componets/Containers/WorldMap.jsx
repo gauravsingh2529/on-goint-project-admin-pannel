@@ -1,6 +1,7 @@
 import React from 'react';
 import { Map } from 'react-jvectormap';
 // import 'react-jvectormap/lib/styles/css/jquery-jvectormap.css'; // Corrected import
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const WorldMap = () => {
   return (

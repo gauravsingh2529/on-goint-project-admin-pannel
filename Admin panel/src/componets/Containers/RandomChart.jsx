@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Chart, registerables } from 'chart.js';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Register all chart components
 Chart.register(...registerables);

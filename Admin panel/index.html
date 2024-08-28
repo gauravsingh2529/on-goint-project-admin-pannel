@@ -8,37 +8,19 @@
   <!-- Favicon -->
   <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
 
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-<!-- Public/index.html -->
 
   <!-- Stylesheets -->
-  <!-- <link rel="stylesheet" href="/src/assets/css/bootstrap.min.css" /> -->
   <link rel="stylesheet" href="/src/assets/css/plugins.min.css" />
   <link rel="stylesheet" href="/src/assets/css/kaiadmin.min.css" />
   <link rel="stylesheet" href="/src/assets/css/demo.css" />
 
-  <!-- Fonts and Icons -->
+  <!-- Custom Fonts -->
   <!-- <link rel="stylesheet" href="/src/assets/css/fonts.min.css" /> -->
-  <!-- <script>
-    // Load custom fonts
-    document.addEventListener('DOMContentLoaded', () => {
-      WebFont.load({
-        google: { families: ["Public Sans:300,400,500,600,700"] },
-        custom: {
-          families: [
-            "Font Awesome 5 Solid",
-            "Font Awesome 5 Regular",
-            "Font Awesome 5 Brands",
-            "simple-line-icons",
-          ],
-          urls: ["/src/assets/css/fonts.min.css"],
-        },
-        active: function () {
-          sessionStorage.fonts = true;
-        },
-      });
-    });
-  </script> -->
+  
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/css/bootstrap.min.css">
 </head>
 <body>
   <div id="root"></div>
@@ -47,23 +29,234 @@
   <script type="module" src="/src/main.jsx"></script>
 
   <!-- Core JS Files -->
-  <!-- These are not needed for Vite/React. If you need them, use npm packages or import them in your JavaScript/React files -->
-  
-  <script src="/src/assets/js/core/jquery-3.7.1.min.js"></script>
-  <script src="/src/assets/js/core/popper.min.js"></script>
-  <!-- <script src="/src/assets/js/core/bootstrap.min.js"></script> -->
-  <script src="/src/assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-  <script src="/src/assets/js/plugin/chart.js/chart.min.js"></script>
-  <script src="/src/assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-  <script src="/src/assets/js/plugin/chart-circle/circles.min.js"></script>
-  <script src="/src/assets/js/plugin/datatables/datatables.min.js"></script>
-  <script src="/src/assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-  <script src="/src/assets/js/plugin/jsvectormap/jsvectormap.min.js"></script>
-  <script src="/src/assets/js/plugin/jsvectormap/world.js"></script>
-  <script src="/src/assets/js/plugin/sweetalert/sweetalert.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.6.6/dist/js/jsvectormap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsvectormap@1.6.6/dist/maps/js/world.js"></script>
+  <script src="/src/assets/js/demo.js"></script>
   <script src="/src/assets/js/kaiadmin.min.js"></script>
   <script src="/src/assets/js/setting-demo.js"></script>
-  <script src="/src/assets/js/demo.js"></script>
- 
+
+  <!-- Custom JS -->
+  <script>
+    // Circle Chart
+    Circles.create({
+      id: 'task-complete',
+      radius: 50,
+      value: 80,
+      maxValue: 100,
+      width: 5,
+      text: function(value) { return value + '%'; },
+      colors: ['#36a3f7', '#fff'],
+      duration: 400,
+      wrpClass: 'circles-wrp',
+      textClass: 'circles-text',
+      styleWrapper: true,
+      styleText: true
+    });
+
+    // Notify
+    $.notify({
+      icon: 'icon-bell',
+      title: 'Kaiadmin',
+      message: 'Premium Bootstrap 5 Admin Dashboard',
+    }, {
+      type: 'secondary',
+      placement: {
+        from: "bottom",
+        align: "right"
+      },
+      time: 1000,
+    });
+
+    // JS Vector Map
+    var world_map = new jsVectorMap({
+      selector: "#world-map",
+      map: "world",
+      zoomOnScroll: false,
+      regionStyle: {
+        hover: {
+          fill: '#435ebe'
+        }
+      },
+      markers: [
+        { name: 'Indonesia', coords: [-6.229728, 106.6894311], style: { fill: '#435ebe' } },
+        { name: 'United States', coords: [38.8936708, -77.1546604], style: { fill: '#28ab55' } },
+        { name: 'Russia', coords: [55.5807481, 36.825129], style: { fill: '#f3616d' } },
+        { name: 'China', coords: [39.9385466, 116.1172735] },
+        { name: 'United Kingdom', coords: [51.5285582, -0.2416812] },
+        { name: 'India', coords: [26.8851417, 75.6504721] },
+        { name: 'Australia', coords: [-35.2813046, 149.124822] },
+        { name: 'Brazil', coords: [-22.9140693, -43.5860681] },
+        { name: 'Egypt', coords: [26.834955, 26.3823725] },
+      ],
+      onRegionTooltipShow(event, tooltip) {
+        tooltip.css({ backgroundColor: '#435ebe' });
+      }
+    });
+
+    // Chart.js
+    var ctx = document.getElementById('statisticsChart').getContext('2d');
+    var statisticsChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+          {
+            label: "Subscribers",
+            borderColor: '#f3545d',
+            pointBackgroundColor: 'rgba(243, 84, 93, 0.6)',
+            pointRadius: 0,
+            backgroundColor: 'rgba(243, 84, 93, 0.4)',
+            legendColor: '#f3545d',
+            fill: true,
+            borderWidth: 2,
+            data: [154, 184, 175, 203, 210, 231, 240, 278, 252, 312, 320, 374]
+          },
+          {
+            label: "New Visitors",
+            borderColor: '#fdaf4b',
+            pointBackgroundColor: 'rgba(253, 175, 75, 0.6)',
+            pointRadius: 0,
+            backgroundColor: 'rgba(253, 175, 75, 0.4)',
+            legendColor: '#fdaf4b',
+            fill: true,
+            borderWidth: 2,
+            data: [256, 230, 245, 287, 240, 250, 230, 295, 331, 431, 456, 521]
+          },
+          {
+            label: "Active Users",
+            borderColor: '#177dff',
+            pointBackgroundColor: 'rgba(23, 125, 255, 0.6)',
+            pointRadius: 0,
+            backgroundColor: 'rgba(23, 125, 255, 0.4)',
+            legendColor: '#177dff',
+            fill: true,
+            borderWidth: 2,
+            data: [542, 480, 430, 550, 530, 453, 380, 434, 568, 610, 700, 900]
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: false
+        },
+        tooltips: {
+          bodySpacing: 4,
+          mode: "nearest",
+          intersect: 0,
+          position: "nearest",
+          xPadding: 10,
+          yPadding: 10,
+          caretPadding: 10
+        },
+        layout: {
+          padding: { left: 5, right: 5, top: 15, bottom: 15 }
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontStyle: "500",
+              beginAtZero: false,
+              maxTicksLimit: 5,
+              padding: 10
+            },
+            gridLines: {
+              drawTicks: false,
+              display: false
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              zeroLineColor: "transparent"
+            },
+            ticks: {
+              padding: 10,
+              fontStyle: "500"
+            }
+          }]
+        },
+        legendCallback: function(chart) {
+          var text = [];
+          text.push('<ul class="' + chart.id + '-legend html-legend">');
+          for (var i = 0; i < chart.data.datasets.length; i++) {
+            text.push('<li><span style="background-color:' + chart.data.datasets[i].legendColor + '"></span>');
+            if (chart.data.datasets[i].label) {
+              text.push(chart.data.datasets[i].label);
+            }
+            text.push('</li>');
+          }
+          text.push('</ul>');
+          return text.join('');
+        }
+      }
+    });
+
+    var myLegendContainer = document.getElementById("myChartLegend");
+    myLegendContainer.innerHTML = statisticsChart.generateLegend();
+    var legendItems = myLegendContainer.getElementsByTagName('li');
+    for (var i = 0; i < legendItems.length; i += 1) {
+      legendItems[i].addEventListener("click", legendClickCallback, false);
+    }
+
+    var dailySalesChart = document.getElementById('dailySalesChart').getContext('2d');
+    var myDailySalesChart = new Chart(dailySalesChart, {
+      type: 'line',
+      data: {
+        labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September"],
+        datasets: [
+          {
+            label: "Sales Analytics",
+            fill: true,
+            borderColor: "#f3545d",
+            pointBackgroundColor: "rgba(243, 84, 93, 0.6)",
+            backgroundColor: "rgba(243, 84, 93, 0.1)",
+            data: [10, 25, 18, 34, 20, 22, 30, 50, 55],
+            lineTension: 0.2
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          yAxes: [{
+            ticks: {
+              fontStyle: "500",
+              beginAtZero: true,
+              maxTicksLimit: 5,
+              padding: 10
+            },
+            gridLines: {
+              drawTicks: false,
+              display: false
+            }
+          }],
+          xAxes: [{
+            gridLines: {
+              zeroLineColor: "transparent"
+            },
+            ticks: {
+              padding: 10,
+              fontStyle: "500"
+            }
+          }]
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          mode: "index",
+          intersect: false,
+          xPadding: 10,
+          yPadding: 10,
+          caretPadding: 10
+        }
+      }
+    });
+  </script>
 </body>
 </html>

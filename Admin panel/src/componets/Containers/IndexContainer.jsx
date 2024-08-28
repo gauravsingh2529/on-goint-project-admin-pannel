@@ -1,16 +1,51 @@
-// src/components/Containers/IndexContainer.jsx
-
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../assets/css/kaiadmin.css'; 
-// import '../../assets/css/kaiadmin.css.map';
-import '../../assets/css/kaiadmin.min.css';
-
-
-
-
+import Chart from '../ChartsMaps/Chart';
+import ActiveUsers from '../ChartsMaps/ActiveUsers';
+import DailySales from '../ChartsMaps/DailySales';
 
 const IndexContainer = () => {
+  // Line chart data and options
+  const lineData = {
+    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    datasets: [
+      {
+        label: 'Monthly Sales',
+        data: [65, 59, 80, 81, 56, 55, 40],
+        fill: false,
+        borderColor: 'rgb(75, 192, 192)',
+        tension: 0.1
+      }
+    ]
+  };
+
+  const lineOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: 'top'
+      },
+      tooltip: {
+        callbacks: {
+          label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw}`
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Month'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Sales'
+        }
+      }
+    }
+  };
+
   return (
     <div className="container">
       <div className="page-inner">
@@ -126,7 +161,7 @@ const IndexContainer = () => {
               </div>
               <div className="card-body">
                 <div className="chart-container" style={{ minHeight: '375px' }}>
-                  <canvas id="statisticsChart"></canvas>
+                  <Chart type="line" data={lineData} options={lineOptions} />
                 </div>
                 <div id="myChartLegend"></div>
               </div>
@@ -134,7 +169,7 @@ const IndexContainer = () => {
           </div>
           <div className="col-md-4">
             <div className="card card-primary card-round">
-              <div className="card-header">
+              {/* <div className="card-header">
                 <div className="card-head-row">
                   <div className="card-title">Daily Sales</div>
                   <div className="card-tools">
@@ -149,7 +184,10 @@ const IndexContainer = () => {
                       >
                         Export
                       </button>
-                      <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <div
+                        className="dropdown-menu"
+                        aria-labelledby="dropdownMenuButton"
+                      >
                         <a className="dropdown-item" href="#">Action</a>
                         <a className="dropdown-item" href="#">Another action</a>
                         <a className="dropdown-item" href="#">Something else here</a>
@@ -158,26 +196,28 @@ const IndexContainer = () => {
                   </div>
                 </div>
                 <div className="card-category">March 25 - April 02</div>
-              </div>
-              <div className="card-body pb-0">
+              </div> */}
+              {/* <div className="card-body pb-0">
                 <div className="mb-4 mt-2">
                   <h1>$4,578.58</h1>
                 </div>
-                <div className="pull-in">
-                  <canvas id="dailySalesChart"></canvas>
-                </div>
-              </div>
+                <div className="pull-in"> */}
+                <DailySales />
+                  {/* <canvas id="dailySalesChart"></canvas> */}
+                {/* </div>
+              </div> */}
             </div>
-            <div className="card card-round">
-              <div className="card-body pb-0">
+            {/* <div className="card card-round"> */}
+              {/* <div className="card-body pb-0">
                 <div className="h1 fw-bold float-end text-primary">+5%</div>
                 <h2 className="mb-2">17</h2>
                 <p className="text-muted">Users online</p>
-                <div className="pull-in sparkline-fix">
-                  <div id="lineChart"></div>
-                </div>
-              </div>
-            </div>
+                <div className="pull-in sparkline-fix"> */}
+                <ActiveUsers />
+                  {/* <div id="lineChart"></div> */}
+                {/* </div>
+              </div> */}
+            {/* </div> */}
           </div>
         </div>
         <div className="row">
@@ -187,76 +227,26 @@ const IndexContainer = () => {
                 <div className="card-head-row card-tools-still-right">
                   <h4 className="card-title">Users Geolocation</h4>
                   <div className="card-tools">
-                    <button className="btn btn-icon btn-link btn-primary btn-xs">
+                    <button
+                      className="btn btn-icon btn-link btn-primary btn-xs"
+                    >
                       <span className="fa fa-angle-down"></span>
                     </button>
-                    <button className="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card">
+                    <button
+                      className="btn btn-icon btn-link btn-primary btn-xs btn-refresh-card"
+                    >
                       <span className="fa fa-sync-alt"></span>
                     </button>
-                    <button className="btn btn-icon btn-link btn-primary btn-xs">
-                      <span className="fa fa-times"></span>
+                    <button
+                      className="btn btn-icon btn-link btn-primary btn-xs"
+                    >
+                      <span className="fa fa-cog"></span>
                     </button>
                   </div>
                 </div>
-                <p className="card-category">
-                  Map of the distribution of users around the world
-                </p>
               </div>
               <div className="card-body">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="table-responsive table-hover table-sales">
-                      <table className="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div className="flag">
-                                <img
-                                  src="assets/img/flags/id.png"
-                                  alt="indonesia"
-                                />
-                              </div>
-                            </td>
-                            <td>Indonesia</td>
-                            <td className="text-end">2,320</td>
-                            <td className="text-end">42.18%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="flag">
-                                <img
-                                  src="assets/img/flags/us.png"
-                                  alt="us"
-                                />
-                              </div>
-                            </td>
-                            <td>United States</td>
-                            <td className="text-end">1,820</td>
-                            <td className="text-end">33.80%</td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div className="flag">
-                                <img
-                                  src="assets/img/flags/gb.png"
-                                  alt="uk"
-                                />
-                              </div>
-                            </td>
-                            <td>United Kingdom</td>
-                            <td className="text-end">1,208</td>
-                            <td className="text-end">22.85%</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="map-container">
-                      <div id="world-map"></div>
-                    </div>
-                  </div>
-                </div>
+                <div id="world-map" style={{ height: '400px' }}></div>
               </div>
             </div>
           </div>

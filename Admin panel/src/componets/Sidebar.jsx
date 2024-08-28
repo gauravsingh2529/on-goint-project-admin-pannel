@@ -1,6 +1,6 @@
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap'; // Ensure Bootstrap JavaScript is loaded
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap'; // Ensure Bootstrap JavaScript is loaded
 
 const Sidebar = () => {
   return (

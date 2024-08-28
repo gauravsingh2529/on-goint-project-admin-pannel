@@ -4,7 +4,7 @@ import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), createVitePlugins()],
+  plugins: [react()],
 
   css: {
     preprocessorOptions: {
@@ -19,16 +19,7 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src'), // Alias for 'src' directory
     },
   },
-  
-  css: {
-    // Options for CSS pre-processors, e.g., PostCSS
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@import "@/styles/variables.scss";`, // Global SCSS variables
-      },
-    },
-  },
-  
+
   // To define environment variables
   define: {
     'process.env': {
